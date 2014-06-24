@@ -5,7 +5,17 @@
  * this file and include it in basic-server.js so that it actually works.
  * *Hint* Check out the node module documentation at http://nodejs.org/api/modules.html. */
 
-module.exports.db = {};
+var fs = require('fs');
+
+if (fs.existsSync('db.json')) {
+  module.exports.db = require('./db.json');
+} else {
+  module.exports.db = {};
+}
+
+setInterval(function () {
+  fs.writeFileSync('db.json', JSON.stringify(module.exports.db));
+} , 3000);
 
 module.exports.handler = function(request, response) {
   /* the 'request' argument comes from nodes http module. It includes info about the
@@ -15,8 +25,6 @@ module.exports.handler = function(request, response) {
    * http://nodemanual.org/0.8.14/nodejs_ref_guide/http.html */
 
   console.log('Serving request type ' + request.method + ' for url ' + request.url);
-
-// /classes/messages
 
   var isRoom = request.url.split('/')[1] === 'classes';
   var room = request.url.split('/')[2];
@@ -41,9 +49,7 @@ module.exports.handler = function(request, response) {
     response.end(JSON.stringify({results: module.exports.db[room]}));
 
   } else if (isRoom && request.method === 'POST') {
-
     var statusCode = 201;
-
     var message = '';
 
     request.on('data', function (chunk) {
