@@ -111,25 +111,6 @@ module.exports.handler = function(request, response) {
      * up in the browser.*/
     response.end(JSON.stringify({status: 'error', message: 'File not found'}));
   }
-
-
-
-  // var statusCode = 200;
-
-  // /* Without this line, this server wouldn't work. See the note
-  //  * below about CORS. */
-  // var headers = defaultCorsHeaders;
-
-  // headers['Content-Type'] = 'text/plain';
-
-  // /* .writeHead() tells our server what HTTP status code to send back */
-  // response.writeHead(statusCode, headers);
-
-  // /* Make sure to always call response.end() - Node will not send
-  //  * anything back to the client until you do. The string you pass to
-  //  * response.end() will be the body of the response - i.e. what shows
-  //  * up in the browser.*/
-  // response.end('Hello, World!');
 };
 
 /* These headers will allow Cross-Origin Resource Sharing (CORS).
